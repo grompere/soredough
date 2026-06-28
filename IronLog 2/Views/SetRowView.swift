@@ -4,8 +4,8 @@ import SwiftData
 struct SetRowView: View {
     @Bindable var exerciseSet: ExerciseSet
     let setNumber: Int
-    /// Baseline to compare this set's weight against for the progress arrow.
-    /// (FR-6: this is the exercise's absolute best weight, not the same-position set.)
+    /// Baseline to compare this set's weight against for the progress arrow:
+    /// the same-position set from the last completed session. Same weight → no arrow.
     var comparisonWeight: Double? = nil
 
     @State private var weightText: String = ""

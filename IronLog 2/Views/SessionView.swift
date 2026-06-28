@@ -17,6 +17,8 @@ struct SessionView: View {
     @FocusState private var focusedNameID: UUID?
     /// Exercise currently having its tags edited (FR-3).
     @State private var tagEditingExercise: Exercise?
+    /// Exercise that just had "Use Last" applied — drives the transient checkmark.
+    @State private var snappedExerciseID: UUID?
 
     @Query(
         filter: #Predicate<Session> { $0.completedAt != nil },
@@ -171,9 +173,6 @@ struct SessionView: View {
     private func exerciseSection(_ exercise: Exercise) -> some View {
         let sortedSets = exercise.sets.sorted { $0.sortOrder < $1.sortOrder }
         let prevSets = previousSets(for: exercise.name)
-        // FR-6: compare against the best weight from the LAST session (not all-time),
-        // so the arrow answers "am I beating last time?". Reuses prevSets — no extra query.
-        let lastSessionMax = prevSets.map(\.weight).max()
 
         VStack(spacing: 0) {
             // Header
@@ -304,10 +303,19 @@ struct SessionView: View {
 
                     Spacer()
 
+                    // Transient confirmation checkmark (fades out)
+                    if snappedExerciseID == exercise.id {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.green)
+                            .transition(.opacity.combined(with: .scale))
+                    }
+
                     Button {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.82)) {
                             snapToLastSession(exercise: exercise, lastSets: prevSets)
                         }
+                        confirmSnap(for: exercise.id)
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.triangle.2.circlepath")
@@ -338,7 +346,7 @@ struct SessionView: View {
                         SetRowView(
                             exerciseSet: exerciseSet,
                             setNumber: index + 1,
-                            comparisonWeight: lastSessionMax
+                            comparisonWeight: index < prevSets.count ? prevSets[index].weight : nil
                         )
 
                         // Inline delete button for custom layout
@@ -529,6 +537,21 @@ struct SessionView: View {
                     sortOrder: i
                 )
                 exercise.sets.append(newSet)
+            }
+        }
+    }
+
+    /// Shows the transient "snapped" checkmark for an exercise, then fades it out.
+    private func confirmSnap(for exerciseID: UUID) {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            snappedExerciseID = exerciseID
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            // Only clear if this exercise is still the one showing the checkmark,
+            // so a newer tap on another exercise isn't cut short.
+            guard snappedExerciseID == exerciseID else { return }
+            withAnimation(.easeOut(duration: 0.4)) {
+                snappedExerciseID = nil
             }
         }
     }
