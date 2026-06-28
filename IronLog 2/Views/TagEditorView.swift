@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TagEditorView: View {
     @Binding var tags: [String]
+    @Environment(\.dismiss) private var dismiss
     @State private var isJittering = false
     @State private var newTagText = ""
     @State private var isAddingTag = false
@@ -54,8 +55,13 @@ struct TagEditorView: View {
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Done") {
+                        // Commit any tag still being typed before closing,
+                        // so a half-entered tag isn't silently lost. (BUG-1)
+                        if isAddingTag {
+                            commitNewTag()
+                        }
                         isJittering = false
-                        isAddingTag = false
+                        dismiss()
                     }
                 }
             }

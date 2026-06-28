@@ -6,6 +6,9 @@ struct TemplateSetRowView: View {
     let setNumber: Int
 
     @State private var weightText: String = ""
+    @State private var repText: String = ""
+    @FocusState private var isWeightFocused: Bool
+    @FocusState private var isRepFocused: Bool
 
     var body: some View {
         HStack(spacing: 6) {
@@ -28,6 +31,7 @@ struct TemplateSetRowView: View {
                     .fontDesign(.rounded)
                     .frame(width: 52, height: 32)
                     .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 7))
+                    .focused($isWeightFocused)
                     .onChange(of: weightText) { _, newValue in
                         parseWeight(newValue)
                     }
@@ -40,18 +44,37 @@ struct TemplateSetRowView: View {
 
             Spacer()
 
-            // Rep Count Picker
-            Picker("Reps", selection: $templateSet.repCount) {
-                ForEach(1...20, id: \.self) { count in
-                    Text("\(count)").tag(count)
+            // Rep Count: typeable field + dropdown (FR-4)
+            HStack(spacing: 2) {
+                TextField("8", text: $repText)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.center)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .fontDesign(.rounded)
+                    .frame(width: 34, height: 32)
+                    .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 7))
+                    .focused($isRepFocused)
+                    .onSubmit { flushReps() }
+                    .onChange(of: isRepFocused) { _, focused in
+                        if !focused { flushReps() }
+                    }
+
+                Menu {
+                    ForEach(1...20, id: \.self) { count in
+                        Button("\(count) reps") {
+                            templateSet.repCount = count
+                            repText = "\(count)"
+                        }
+                    }
+                } label: {
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 22, height: 32)
+                        .contentShape(Rectangle())
                 }
             }
-            .pickerStyle(.menu)
-            .tint(.primary)
-            .frame(width: 56, height: 32)
-            .font(.subheadline)
-            .fontWeight(.medium)
-            .fontDesign(.rounded)
         }
         .onAppear {
             if templateSet.weight > 0 {
@@ -61,6 +84,7 @@ struct TemplateSetRowView: View {
                     weightText = String(templateSet.weight)
                 }
             }
+            repText = "\(templateSet.repCount)"
         }
     }
 
@@ -72,6 +96,14 @@ struct TemplateSetRowView: View {
             weightText = filtered
         }
         templateSet.weight = Double(filtered) ?? 0
+    }
+
+    /// Parses the typed rep count. Empty/zero falls back to 1 (a set has ≥1 rep).
+    private func flushReps() {
+        let filtered = repText.filter { $0.isNumber }
+        let clamped = max(Int(filtered) ?? 0, 1)
+        templateSet.repCount = clamped
+        repText = "\(clamped)"
     }
 }
 

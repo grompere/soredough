@@ -11,6 +11,10 @@ struct SessionView: View {
     @State private var focusedExerciseID: UUID?
     /// The ID of the most recently added exercise, used for scroll targeting.
     @State private var scrollTargetID: UUID?
+    /// Keyboard focus for the exercise name field, drives autocomplete (FR-1).
+    @FocusState private var focusedNameID: UUID?
+    /// Exercise currently having its tags edited (FR-3).
+    @State private var tagEditingExercise: Exercise?
 
     @Query(
         filter: #Predicate<Session> { $0.completedAt != nil },
@@ -33,6 +37,60 @@ struct SessionView: View {
             }
         }
         return []
+    }
+
+    /// The single best historical set (highest completed weight) for an exercise
+    /// across all *prior* completed sessions. Powers the absolute-max progress
+    /// arrow (FR-6) and the one-tap "use last max" action (FR-7).
+    private func bestHistoricalSet(for exerciseName: String) -> (weight: Double, reps: Int)? {
+        let name = exerciseName.trimmingCharacters(in: .whitespaces)
+        guard !name.isEmpty else { return nil }
+
+        var best: (weight: Double, reps: Int)?
+        for completed in completedSessions {
+            guard completed.id != session.id else { continue }
+            for exercise in completed.exercises
+            where exercise.name.localizedCaseInsensitiveCompare(name) == .orderedSame {
+                for set in exercise.sets where set.isCompleted && set.weight > 0 {
+                    if best == nil || set.weight > best!.weight {
+                        best = (set.weight, set.repCount)
+                    }
+                }
+            }
+        }
+        return best
+    }
+
+    // MARK: - Autocomplete (FR-1)
+
+    /// All unique historical exercise names ranked by how often they appear.
+    private var exerciseNamesByFrequency: [(name: String, count: Int)] {
+        var counts: [String: Int] = [:]
+        var displayNames: [String: String] = [:]
+        for completed in completedSessions {
+            for exercise in completed.exercises {
+                let key = exercise.name.lowercased().trimmingCharacters(in: .whitespaces)
+                guard !key.isEmpty else { continue }
+                counts[key, default: 0] += 1
+                displayNames[key] = exercise.name
+            }
+        }
+        return counts.map { (name: displayNames[$0.key]!, count: $0.value) }
+            .sorted { $0.count > $1.count }
+    }
+
+    /// Up to 5 suggestions matching the query, ranked by frequency.
+    private func suggestions(for query: String) -> [String] {
+        let trimmed = query.trimmingCharacters(in: .whitespaces).lowercased()
+        let isDefault = trimmed.isEmpty || trimmed == "new exercise"
+        return exerciseNamesByFrequency
+            .filter { entry in
+                if isDefault { return true }
+                let lower = entry.name.lowercased()
+                return lower.contains(trimmed) && lower.trimmingCharacters(in: .whitespaces) != trimmed
+            }
+            .prefix(5)
+            .map(\.name)
     }
 
     private func formatWeight(_ w: Double) -> String {
@@ -101,6 +159,10 @@ struct SessionView: View {
             TagEditorView(tags: $session.tags)
                 .presentationDetents([.medium])
         }
+        .sheet(item: $tagEditingExercise) { exercise in
+            TagEditorView(tags: Bindable(exercise).tags)
+                .presentationDetents([.medium])
+        }
     }
 
     // MARK: - Exercise Section
@@ -109,7 +171,8 @@ struct SessionView: View {
     private func exerciseSection(_ exercise: Exercise) -> some View {
         let sortedSets = exercise.sets.sorted { $0.sortOrder < $1.sortOrder }
         let prevSets = previousSets(for: exercise.name)
-        
+        let bestWeight = bestHistoricalSet(for: exercise.name)?.weight
+
         VStack(spacing: 0) {
             // Header
             HStack(spacing: 8) {
@@ -118,10 +181,39 @@ struct SessionView: View {
                     .fontWeight(.semibold)
                     .textCase(nil)
                     .foregroundStyle(.primary)
+                    .focused($focusedNameID, equals: exercise.id)
                     .onTapGesture {
                         focusedExerciseID = exercise.id
                     }
                 Spacer()
+
+                // One-tap: set all targets to historical best (FR-7)
+                if bestWeight != nil {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            applyLastMax(to: exercise)
+                        }
+                    } label: {
+                        Image(systemName: "bolt.fill")
+                            .font(.caption2)
+                            .foregroundStyle(.orange)
+                            .frame(width: 28, height: 28)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.borderless)
+                }
+
+                // Edit per-exercise tags (FR-3)
+                Button {
+                    tagEditingExercise = exercise
+                } label: {
+                    Image(systemName: exercise.tags.isEmpty ? "tag" : "tag.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.blue)
+                        .frame(width: 28, height: 28)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.borderless)
 
                 // Move up/down buttons
                 let sorted = session.exercises.sorted { $0.sortOrder < $1.sortOrder }
@@ -173,6 +265,46 @@ struct SessionView: View {
             .padding(.vertical, 12)
             .background(Color(.secondarySystemGroupedBackground))
 
+            // Autocomplete suggestion chips (FR-1)
+            if focusedNameID == exercise.id {
+                let matches = suggestions(for: exercise.name)
+                if !matches.isEmpty {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 6) {
+                            ForEach(matches, id: \.self) { name in
+                                Button {
+                                    withAnimation(.easeOut(duration: 0.15)) {
+                                        exercise.name = name
+                                        focusedNameID = nil
+                                    }
+                                } label: {
+                                    Text(name)
+                                        .font(.caption2)
+                                        .fontWeight(.medium)
+                                        .foregroundStyle(.orange)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .background(.orange.opacity(0.12), in: Capsule())
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 6)
+                    }
+                    .background(Color(.secondarySystemGroupedBackground))
+                }
+            }
+
+            // Per-exercise tags display (FR-3)
+            if !exercise.tags.isEmpty {
+                TagFlowView(tags: exercise.tags, compact: true)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 6)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(.secondarySystemGroupedBackground))
+            }
+
             // Previous workout banner
             if !prevSets.isEmpty {
                 HStack(spacing: 4) {
@@ -187,10 +319,10 @@ struct SessionView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(.secondarySystemGroupedBackground))
             }
-            
+
             Divider()
                 .padding(.leading, 16)
-            
+
             // Set rows
             ForEach(Array(sortedSets.enumerated()), id: \.element.id) { index, exerciseSet in
                 VStack(spacing: 0) {
@@ -198,9 +330,9 @@ struct SessionView: View {
                         SetRowView(
                             exerciseSet: exerciseSet,
                             setNumber: index + 1,
-                            previousWeight: index < prevSets.count ? prevSets[index].weight : nil
+                            comparisonWeight: bestWeight
                         )
-                        
+
                         // Inline delete button for custom layout
                         Button(role: .destructive) {
                             withAnimation {
@@ -220,14 +352,14 @@ struct SessionView: View {
                     .onTapGesture {
                         focusedExerciseID = exercise.id
                     }
-                    
+
                     if index < sortedSets.count - 1 {
                         Divider()
                             .padding(.leading, 48)
                     }
                 }
             }
-            
+
             Divider()
                 .padding(.leading, 16)
 
@@ -250,6 +382,23 @@ struct SessionView: View {
                 .padding(.vertical, 12)
                 .background(Color(.secondarySystemGroupedBackground))
             }
+
+            Divider()
+                .padding(.leading, 16)
+
+            // Exercise notes (FR-2)
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "note.text")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+                    .padding(.top, 2)
+                TextField("Add a note…", text: Bindable(exercise).notes, axis: .vertical)
+                    .font(.caption)
+                    .lineLimit(1...4)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(Color(.secondarySystemGroupedBackground))
         }
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -351,6 +500,15 @@ struct SessionView: View {
         exercise.sets.append(newSet)
     }
 
+    /// FR-7: set every set's weight & reps to the exercise's historical best.
+    private func applyLastMax(to exercise: Exercise) {
+        guard let best = bestHistoricalSet(for: exercise.name) else { return }
+        for set in exercise.sets {
+            set.weight = best.weight
+            set.repCount = best.reps
+        }
+    }
+
     private func deleteExercise(_ exercise: Exercise) {
         // If the deleted exercise was focused, clear focus
         if focusedExerciseID == exercise.id {
@@ -389,7 +547,9 @@ struct SessionView: View {
     }
 
     private func completeWorkout() {
-        for exercise in session.exercises {
+        // FR-3: preserve any tags the user set on an exercise; only fall back
+        // to the session's tags when the exercise has none of its own.
+        for exercise in session.exercises where exercise.tags.isEmpty {
             exercise.tags = session.tags
         }
         session.completedAt = Date()
@@ -403,4 +563,3 @@ struct SessionView: View {
     }
     .modelContainer(for: Session.self, inMemory: true)
 }
-
