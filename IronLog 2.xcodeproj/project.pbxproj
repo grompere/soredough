@@ -1,0 +1,453 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		011A2B3C4D5E6F7890AB1234 /* ExportFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A2B3C4D5E6F7890AB1230 /* ExportFormat.swift */; };
+		011A2B3C4D5E6F7890AB1235 /* ExportFormatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A2B3C4D5E6F7890AB1231 /* ExportFormatListView.swift */; };
+		011A2B3C4D5E6F7890AB1236 /* ExportFormatEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A2B3C4D5E6F7890AB1232 /* ExportFormatEditorView.swift */; };
+		011A2B3C4D5E6F7890AB1237 /* WorkoutExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A2B3C4D5E6F7890AB1233 /* WorkoutExportView.swift */; };
+		017C72C7FDCEBE6DC28727D9 /* TemplateEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2192AD440040117C41CA1A /* TemplateEditorView.swift */; };
+		0AE2ABCC98761A6207C1739B /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DDF409DC63BD1A92AB2646 /* GeminiService.swift */; };
+		1559CA5501DF9FE9D7FB600D /* ProgressViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B91289DAB5F3419080A97D /* ProgressViews.swift */; };
+		1B6EE0B38E86C4E189005C14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7842BB7F99D9AF1C6E3645B /* Assets.xcassets */; };
+		260B44139E9583FBD3F0DD56 /* WorkoutTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA795B0EC9039944FA11776 /* WorkoutTemplate.swift */; };
+		2FED24FE121ECD3A39122757 /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED44F0A05DFCC8D624DAB216 /* TemplateListView.swift */; };
+		40127623CDEED5DB9F49AEB6 /* TemplateSetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0347C5D8AEBE9306C7DD02A /* TemplateSetRowView.swift */; };
+		5085CBF355C8B650C2EEB187 /* SetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E807003411F1172D2E789ED8 /* SetRowView.swift */; };
+		537D1C27BF3F1CDE15D4DBF3 /* IronLog2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B138E432D031CF0D8C1F6132 /* IronLog2App.swift */; };
+		60011D0745AA068F6F0902AC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32531BD18F9C5D8593F6952 /* SettingsView.swift */; };
+		88CEFE6A0B2FFE92A0B5697D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F877A0D90D56FF73861C7F41 /* HomeView.swift */; };
+		986348E6273A021A883E9D80 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887773964900530040DA6B40 /* Exercise.swift */; };
+		9C21E45F12EB3423D5C0692B /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212369AF357952C623D84AFB /* SessionView.swift */; };
+		9F62BD948B53D6DC5B0CD9BA /* CSVExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52C51CFA6A820A9C890DA0 /* CSVExporter.swift */; };
+		A1FEDDFC4FA0A93F8486527E /* AllTemplatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AE537CEC584F336CFD690 /* AllTemplatesView.swift */; };
+		B25C272DAE5631CEE7EEECD7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB3D68C99D0BC63AA1E81E /* Session.swift */; };
+		BA1B77574274722D59C9A219 /* SoreDough_Export.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4180C2F062F9F959C5BC21F2 /* SoreDough_Export.csv */; };
+		C759BA5200EC00045A493A2D /* TemplateExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957D0F76C118CD65916E1DF9 /* TemplateExercise.swift */; };
+		CABCCF6A6DE53B03C49C8F5E /* WorkoutPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1597BFFF58DF32872A96FFFB /* WorkoutPickerView.swift */; };
+		CD619250D1AEACB67C4F3A81 /* CSVImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB72DD28B4A062D12510CE /* CSVImporter.swift */; };
+		DA2CC98C7A9408C561ACA0ED /* TemplateSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5638E464DF75645190A360B4 /* TemplateSet.swift */; };
+		E1B43ADF137EB1AC189E3B59 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605023E8482A0D496631AF37 /* ShareSheet.swift */; };
+		E4799802C00800F090DC6550 /* TagFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F0E97D9B83CC2E8977EDB6 /* TagFlowView.swift */; };
+		E86550734D2C3DFBA447AA09 /* WorkoutImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CCF335320102F611ADF31B /* WorkoutImportView.swift */; };
+		E98D84FADFFA26D5BE0EDED0 /* TagEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6A38B5068EA41072C0421 /* TagEditorView.swift */; };
+		FF82FFCACDF59ACA81FFE320 /* ExerciseSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96569F85B5E948FDA3359FF /* ExerciseSet.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		00DDF409DC63BD1A92AB2646 /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
+		011A2B3C4D5E6F7890AB1230 /* ExportFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFormat.swift; sourceTree = "<group>"; };
+		011A2B3C4D5E6F7890AB1231 /* ExportFormatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFormatListView.swift; sourceTree = "<group>"; };
+		011A2B3C4D5E6F7890AB1232 /* ExportFormatEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFormatEditorView.swift; sourceTree = "<group>"; };
+		011A2B3C4D5E6F7890AB1233 /* WorkoutExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutExportView.swift; sourceTree = "<group>"; };
+		04B91289DAB5F3419080A97D /* ProgressViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViews.swift; sourceTree = "<group>"; };
+		1597BFFF58DF32872A96FFFB /* WorkoutPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPickerView.swift; sourceTree = "<group>"; };
+		18DB72DD28B4A062D12510CE /* CSVImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVImporter.swift; sourceTree = "<group>"; };
+		212369AF357952C623D84AFB /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		21BB3D68C99D0BC63AA1E81E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		4180C2F062F9F959C5BC21F2 /* SoreDough_Export.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = SoreDough_Export.csv; sourceTree = "<group>"; };
+		47CCF335320102F611ADF31B /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
+		51F0E97D9B83CC2E8977EDB6 /* TagFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFlowView.swift; sourceTree = "<group>"; };
+		5638E464DF75645190A360B4 /* TemplateSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSet.swift; sourceTree = "<group>"; };
+		605023E8482A0D496631AF37 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		670D8E34E295242D8DDD390C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6B2192AD440040117C41CA1A /* TemplateEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditorView.swift; sourceTree = "<group>"; };
+		887773964900530040DA6B40 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		957D0F76C118CD65916E1DF9 /* TemplateExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateExercise.swift; sourceTree = "<group>"; };
+		A50AE537CEC584F336CFD690 /* AllTemplatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTemplatesView.swift; sourceTree = "<group>"; };
+		A96569F85B5E948FDA3359FF /* ExerciseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSet.swift; sourceTree = "<group>"; };
+		AAA795B0EC9039944FA11776 /* WorkoutTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTemplate.swift; sourceTree = "<group>"; };
+		B0347C5D8AEBE9306C7DD02A /* TemplateSetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSetRowView.swift; sourceTree = "<group>"; };
+		B138E432D031CF0D8C1F6132 /* IronLog2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IronLog2App.swift; sourceTree = "<group>"; };
+		B4D35BB1276A3E92DB3D931C /* IronLog 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronLog 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2D6A38B5068EA41072C0421 /* TagEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEditorView.swift; sourceTree = "<group>"; };
+		D32531BD18F9C5D8593F6952 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DA52C51CFA6A820A9C890DA0 /* CSVExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVExporter.swift; sourceTree = "<group>"; };
+		E7842BB7F99D9AF1C6E3645B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E807003411F1172D2E789ED8 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
+		ED44F0A05DFCC8D624DAB216 /* TemplateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateListView.swift; sourceTree = "<group>"; };
+		F877A0D90D56FF73861C7F41 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0A36967D678E66F9D20FEFDA = {
+			isa = PBXGroup;
+			children = (
+				372FBD94C0BEC15671EF4403 /* IronLog 2 */,
+				32E0156FC6B63C97F4E1B3E4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0B0966048FA52A20C69039C7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				887773964900530040DA6B40 /* Exercise.swift */,
+				A96569F85B5E948FDA3359FF /* ExerciseSet.swift */,
+				011A2B3C4D5E6F7890AB1230 /* ExportFormat.swift */,
+				21BB3D68C99D0BC63AA1E81E /* Session.swift */,
+				957D0F76C118CD65916E1DF9 /* TemplateExercise.swift */,
+				5638E464DF75645190A360B4 /* TemplateSet.swift */,
+				AAA795B0EC9039944FA11776 /* WorkoutTemplate.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		32E0156FC6B63C97F4E1B3E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B4D35BB1276A3E92DB3D931C /* IronLog 2.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		372FBD94C0BEC15671EF4403 /* IronLog 2 */ = {
+			isa = PBXGroup;
+			children = (
+				E7842BB7F99D9AF1C6E3645B /* Assets.xcassets */,
+				670D8E34E295242D8DDD390C /* Info.plist */,
+				B138E432D031CF0D8C1F6132 /* IronLog2App.swift */,
+				0B0966048FA52A20C69039C7 /* Models */,
+				ECD0101B83C3E589CDCD285B /* Tracker backfill */,
+				5554A59B50E8EB5C9A241A73 /* Utilities */,
+				74EE2E8753418BCEAFB1F75B /* Views */,
+			);
+			path = "IronLog 2";
+			sourceTree = "<group>";
+		};
+		5554A59B50E8EB5C9A241A73 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DA52C51CFA6A820A9C890DA0 /* CSVExporter.swift */,
+				18DB72DD28B4A062D12510CE /* CSVImporter.swift */,
+				00DDF409DC63BD1A92AB2646 /* GeminiService.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		74EE2E8753418BCEAFB1F75B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A50AE537CEC584F336CFD690 /* AllTemplatesView.swift */,
+				011A2B3C4D5E6F7890AB1232 /* ExportFormatEditorView.swift */,
+				011A2B3C4D5E6F7890AB1231 /* ExportFormatListView.swift */,
+				F877A0D90D56FF73861C7F41 /* HomeView.swift */,
+				04B91289DAB5F3419080A97D /* ProgressViews.swift */,
+				212369AF357952C623D84AFB /* SessionView.swift */,
+				E807003411F1172D2E789ED8 /* SetRowView.swift */,
+				D32531BD18F9C5D8593F6952 /* SettingsView.swift */,
+				605023E8482A0D496631AF37 /* ShareSheet.swift */,
+				D2D6A38B5068EA41072C0421 /* TagEditorView.swift */,
+				51F0E97D9B83CC2E8977EDB6 /* TagFlowView.swift */,
+				6B2192AD440040117C41CA1A /* TemplateEditorView.swift */,
+				ED44F0A05DFCC8D624DAB216 /* TemplateListView.swift */,
+				B0347C5D8AEBE9306C7DD02A /* TemplateSetRowView.swift */,
+				011A2B3C4D5E6F7890AB1233 /* WorkoutExportView.swift */,
+				47CCF335320102F611ADF31B /* WorkoutImportView.swift */,
+				1597BFFF58DF32872A96FFFB /* WorkoutPickerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ECD0101B83C3E589CDCD285B /* Tracker backfill */ = {
+			isa = PBXGroup;
+			children = (
+				4180C2F062F9F959C5BC21F2 /* SoreDough_Export.csv */,
+			);
+			path = "Tracker backfill";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9263B915FB04553EEA6124C9 /* IronLog 2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36CC6319D761BAA0D9956863 /* Build configuration list for PBXNativeTarget "IronLog 2" */;
+			buildPhases = (
+				61B88FFBC142635E226F432D /* Sources */,
+				76DE66F83E9FB9C9B5481C21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "IronLog 2";
+			packageProductDependencies = (
+			);
+			productName = "IronLog 2";
+			productReference = B4D35BB1276A3E92DB3D931C /* IronLog 2.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		503BF87AFE8F133F864E78CC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = DC33E07D38F0B3B1BE252513 /* Build configuration list for PBXProject "IronLog 2" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0A36967D678E66F9D20FEFDA;
+			minimizedProjectReferenceProxies = 1;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9263B915FB04553EEA6124C9 /* IronLog 2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		76DE66F83E9FB9C9B5481C21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B6EE0B38E86C4E189005C14 /* Assets.xcassets in Resources */,
+				BA1B77574274722D59C9A219 /* SoreDough_Export.csv in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		61B88FFBC142635E226F432D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1FEDDFC4FA0A93F8486527E /* AllTemplatesView.swift in Sources */,
+				9F62BD948B53D6DC5B0CD9BA /* CSVExporter.swift in Sources */,
+				011A2B3C4D5E6F7890AB1234 /* ExportFormat.swift in Sources */,
+				011A2B3C4D5E6F7890AB1235 /* ExportFormatListView.swift in Sources */,
+				011A2B3C4D5E6F7890AB1236 /* ExportFormatEditorView.swift in Sources */,
+				011A2B3C4D5E6F7890AB1237 /* WorkoutExportView.swift in Sources */,
+				CD619250D1AEACB67C4F3A81 /* CSVImporter.swift in Sources */,
+				986348E6273A021A883E9D80 /* Exercise.swift in Sources */,
+				FF82FFCACDF59ACA81FFE320 /* ExerciseSet.swift in Sources */,
+				0AE2ABCC98761A6207C1739B /* GeminiService.swift in Sources */,
+				88CEFE6A0B2FFE92A0B5697D /* HomeView.swift in Sources */,
+				537D1C27BF3F1CDE15D4DBF3 /* IronLog2App.swift in Sources */,
+				1559CA5501DF9FE9D7FB600D /* ProgressViews.swift in Sources */,
+				B25C272DAE5631CEE7EEECD7 /* Session.swift in Sources */,
+				9C21E45F12EB3423D5C0692B /* SessionView.swift in Sources */,
+				5085CBF355C8B650C2EEB187 /* SetRowView.swift in Sources */,
+				60011D0745AA068F6F0902AC /* SettingsView.swift in Sources */,
+				E1B43ADF137EB1AC189E3B59 /* ShareSheet.swift in Sources */,
+				E98D84FADFFA26D5BE0EDED0 /* TagEditorView.swift in Sources */,
+				E4799802C00800F090DC6550 /* TagFlowView.swift in Sources */,
+				017C72C7FDCEBE6DC28727D9 /* TemplateEditorView.swift in Sources */,
+				C759BA5200EC00045A493A2D /* TemplateExercise.swift in Sources */,
+				2FED24FE121ECD3A39122757 /* TemplateListView.swift in Sources */,
+				DA2CC98C7A9408C561ACA0ED /* TemplateSet.swift in Sources */,
+				40127623CDEED5DB9F49AEB6 /* TemplateSetRowView.swift in Sources */,
+				E86550734D2C3DFBA447AA09 /* WorkoutImportView.swift in Sources */,
+				CABCCF6A6DE53B03C49C8F5E /* WorkoutPickerView.swift in Sources */,
+				260B44139E9583FBD3F0DD56 /* WorkoutTemplate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		489FE859061C867A09E8BCAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		873F4D856768986A09447BE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X37Z26PFK2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IronLog 2/Info.plist";
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ironlog.IronLog2;
+				PRODUCT_NAME = "Sore Dough";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E2768C1B7F8986F189A057F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X37Z26PFK2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IronLog 2/Info.plist";
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ironlog.IronLog2;
+				PRODUCT_NAME = "Sore Dough";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		F18AB50FFB9623EE401D0897 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		36CC6319D761BAA0D9956863 /* Build configuration list for PBXNativeTarget "IronLog 2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				873F4D856768986A09447BE5 /* Debug */,
+				E2768C1B7F8986F189A057F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DC33E07D38F0B3B1BE252513 /* Build configuration list for PBXProject "IronLog 2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				489FE859061C867A09E8BCAC /* Debug */,
+				F18AB50FFB9623EE401D0897 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 503BF87AFE8F133F864E78CC /* Project object */;
+}
