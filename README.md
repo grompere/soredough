@@ -52,4 +52,4 @@ The project includes a `project.yml` for [XcodeGen](https://github.com/yonaskolb
 
 ## License
 
-All rights reserved. This is a personal project — not open source (yet?). Feel free to look around, but please don't redistribute.
+MIT — see [LICENSE](LICENSE) for details.
