@@ -50,6 +50,12 @@ Open `IronLog 2.xcodeproj` in Xcode, select your team under Signing & Capabiliti
 
 The project includes a `project.yml` for [XcodeGen](https://github.com/yonaskolb/XcodeGen) if you prefer to regenerate the Xcode project from spec.
 
+## Privacy
+
+Sore Dough does not collect, store, or share any personal user data. All of your workout logs, history, and preferences are stored locally on your device. 
+
+If you use the AI features (like Workout Import or Custom Export), the relevant text or workout data is processed by the Google Gemini API to perform the action, but no personal identification or tracking data is collected or retained by the app.
+
 ## License
 
 MIT — see [LICENSE](LICENSE) for details.
