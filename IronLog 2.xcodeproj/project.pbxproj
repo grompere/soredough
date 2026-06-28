@@ -27,7 +27,6 @@
 		9F62BD948B53D6DC5B0CD9BA /* CSVExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52C51CFA6A820A9C890DA0 /* CSVExporter.swift */; };
 		A1FEDDFC4FA0A93F8486527E /* AllTemplatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AE537CEC584F336CFD690 /* AllTemplatesView.swift */; };
 		B25C272DAE5631CEE7EEECD7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB3D68C99D0BC63AA1E81E /* Session.swift */; };
-		BA1B77574274722D59C9A219 /* SoreDough_Export.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4180C2F062F9F959C5BC21F2 /* SoreDough_Export.csv */; };
 		C759BA5200EC00045A493A2D /* TemplateExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957D0F76C118CD65916E1DF9 /* TemplateExercise.swift */; };
 		CABCCF6A6DE53B03C49C8F5E /* WorkoutPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1597BFFF58DF32872A96FFFB /* WorkoutPickerView.swift */; };
 		CD619250D1AEACB67C4F3A81 /* CSVImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB72DD28B4A062D12510CE /* CSVImporter.swift */; };
@@ -50,7 +49,6 @@
 		18DB72DD28B4A062D12510CE /* CSVImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVImporter.swift; sourceTree = "<group>"; };
 		212369AF357952C623D84AFB /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
 		21BB3D68C99D0BC63AA1E81E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		4180C2F062F9F959C5BC21F2 /* SoreDough_Export.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = SoreDough_Export.csv; sourceTree = "<group>"; };
 		47CCF335320102F611ADF31B /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
 		51F0E97D9B83CC2E8977EDB6 /* TagFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFlowView.swift; sourceTree = "<group>"; };
 		5638E464DF75645190A360B4 /* TemplateSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSet.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 				670D8E34E295242D8DDD390C /* Info.plist */,
 				B138E432D031CF0D8C1F6132 /* IronLog2App.swift */,
 				0B0966048FA52A20C69039C7 /* Models */,
-				ECD0101B83C3E589CDCD285B /* Tracker backfill */,
 				5554A59B50E8EB5C9A241A73 /* Utilities */,
 				74EE2E8753418BCEAFB1F75B /* Views */,
 			);
@@ -151,14 +148,6 @@
 				1597BFFF58DF32872A96FFFB /* WorkoutPickerView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		ECD0101B83C3E589CDCD285B /* Tracker backfill */ = {
-			isa = PBXGroup;
-			children = (
-				4180C2F062F9F959C5BC21F2 /* SoreDough_Export.csv */,
-			);
-			path = "Tracker backfill";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,7 +204,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B6EE0B38E86C4E189005C14 /* Assets.xcassets in Resources */,
-				BA1B77574274722D59C9A219 /* SoreDough_Export.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

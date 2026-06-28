@@ -13,7 +13,7 @@ targets:
     sources:
       - path: IronLog 2
         excludes:
-          - "Tracker backfill/IronLog_Export_1782011651.csv"
+          - "Tracker backfill"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.ironlog.IronLog2
