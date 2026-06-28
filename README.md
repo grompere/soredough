@@ -1,3 +1,5 @@
+_Last updated: June 28, 2026_
+
 # 🥖 Sore Dough
 
 This is a really well baked workout tracker app.
