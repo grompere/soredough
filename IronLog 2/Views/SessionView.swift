@@ -319,15 +319,37 @@ struct SessionView: View {
 
             // Previous workout banner
             if !prevSets.isEmpty {
-                HStack(spacing: 4) {
-                    Image(systemName: "clock.arrow.circlepath")
-                        .font(.system(size: 9))
-                    Text("Last: " + prevSets.map { "\(formatWeight($0.weight))×\($0.repCount)" }.joined(separator: ", "))
-                        .font(.caption2)
+                HStack(spacing: 8) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .font(.system(size: 9))
+                        Text("Last: " + prevSets.map { "\(formatWeight($0.weight))×\($0.repCount)" }.joined(separator: ", "))
+                            .font(.caption2)
+                    }
+                    .foregroundStyle(.tertiary)
+
+                    Spacer()
+
+                    Button {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.82)) {
+                            snapToLastSession(exercise: exercise, lastSets: prevSets)
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .font(.system(size: 8, weight: .bold))
+                            Text("Use Last")
+                                .font(.system(size: 9, weight: .semibold))
+                        }
+                        .foregroundStyle(.orange)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(.orange.opacity(0.12), in: Capsule())
+                    }
+                    .buttonStyle(.plain)
                 }
-                .foregroundStyle(.tertiary)
                 .padding(.horizontal, 16)
-                .padding(.vertical, 6)
+                .padding(.vertical, 4)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(.secondarySystemGroupedBackground))
             }
@@ -522,6 +544,24 @@ struct SessionView: View {
         for set in exercise.sets {
             set.weight = best.weight
             set.repCount = best.reps
+        }
+    }
+
+    /// Snaps all sets in the current exercise to replicate the last session's weights & reps (including matching set count).
+    private func snapToLastSession(exercise: Exercise, lastSets: [ExerciseSet]) {
+        let currentSortedSets = exercise.sets.sorted { $0.sortOrder < $1.sortOrder }
+        for i in 0..<lastSets.count {
+            if i < currentSortedSets.count {
+                currentSortedSets[i].weight = lastSets[i].weight
+                currentSortedSets[i].repCount = lastSets[i].repCount
+            } else {
+                let newSet = ExerciseSet(
+                    weight: lastSets[i].weight,
+                    repCount: lastSets[i].repCount,
+                    sortOrder: i
+                )
+                exercise.sets.append(newSet)
+            }
         }
     }
 
