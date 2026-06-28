@@ -41,32 +41,15 @@ struct SessionView: View {
         return []
     }
 
-    /// The single best historical set (highest completed weight) for an exercise
-    /// across all *prior* completed sessions. Powers the absolute-max progress
-    /// arrow (FR-6) and the one-tap "use last max" action (FR-7).
-    private func bestHistoricalSet(for exerciseName: String) -> (weight: Double, reps: Int)? {
-        let name = exerciseName.trimmingCharacters(in: .whitespaces)
-        guard !name.isEmpty else { return nil }
-
-        var best: (weight: Double, reps: Int)?
-        for completed in completedSessions {
-            guard completed.id != session.id else { continue }
-            for exercise in completed.exercises
-            where exercise.name.localizedCaseInsensitiveCompare(name) == .orderedSame {
-                for set in exercise.sets where set.isCompleted && set.weight > 0 {
-                    if best == nil || set.weight > best!.weight {
-                        best = (set.weight, set.repCount)
-                    }
-                }
-            }
-        }
-        return best
-    }
-
     // MARK: - Autocomplete (FR-1)
 
-    /// All unique historical exercise names ranked by how often they appear.
-    private var exerciseNamesByFrequency: [(name: String, count: Int)] {
+    /// Cached, frequency-ranked list of historical exercise names. Built once on
+    /// appear and refreshed only when the set of completed sessions changes —
+    /// so it is NOT recomputed on every keystroke in the name field.
+    @State private var rankedExerciseNames: [String] = []
+
+    /// Rebuilds the cached frequency ranking from completed sessions.
+    private func rebuildExerciseNameCache() {
         var counts: [String: Int] = [:]
         var displayNames: [String: String] = [:]
         for completed in completedSessions {
@@ -77,22 +60,23 @@ struct SessionView: View {
                 displayNames[key] = exercise.name
             }
         }
-        return counts.map { (name: displayNames[$0.key]!, count: $0.value) }
-            .sorted { $0.count > $1.count }
+        rankedExerciseNames = counts
+            .sorted { $0.value > $1.value }
+            .compactMap { displayNames[$0.key] }
     }
 
-    /// Up to 5 suggestions matching the query, ranked by frequency.
+    /// Up to 5 suggestions matching the query, ranked by frequency (reads cache).
     private func suggestions(for query: String) -> [String] {
         let trimmed = query.trimmingCharacters(in: .whitespaces).lowercased()
         let isDefault = trimmed.isEmpty || trimmed == "new exercise"
-        return exerciseNamesByFrequency
-            .filter { entry in
+        return rankedExerciseNames
+            .filter { name in
                 if isDefault { return true }
-                let lower = entry.name.lowercased()
+                let lower = name.lowercased()
                 return lower.contains(trimmed) && lower.trimmingCharacters(in: .whitespaces) != trimmed
             }
             .prefix(5)
-            .map(\.name)
+            .map { $0 }
     }
 
     private func formatWeight(_ w: Double) -> String {
@@ -175,6 +159,10 @@ struct SessionView: View {
                 isKeyboardVisible = false
             }
         }
+        .onAppear { rebuildExerciseNameCache() }
+        .onChange(of: completedSessions.count) { _, _ in
+            rebuildExerciseNameCache()
+        }
     }
 
     // MARK: - Exercise Section
@@ -183,7 +171,9 @@ struct SessionView: View {
     private func exerciseSection(_ exercise: Exercise) -> some View {
         let sortedSets = exercise.sets.sorted { $0.sortOrder < $1.sortOrder }
         let prevSets = previousSets(for: exercise.name)
-        let bestWeight = bestHistoricalSet(for: exercise.name)?.weight
+        // FR-6: compare against the best weight from the LAST session (not all-time),
+        // so the arrow answers "am I beating last time?". Reuses prevSets — no extra query.
+        let lastSessionMax = prevSets.map(\.weight).max()
 
         VStack(spacing: 0) {
             // Header
@@ -198,22 +188,6 @@ struct SessionView: View {
                         focusedExerciseID = exercise.id
                     }
                 Spacer()
-
-                // One-tap: set all targets to historical best (FR-7)
-                if bestWeight != nil {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            applyLastMax(to: exercise)
-                        }
-                    } label: {
-                        Image(systemName: "bolt.fill")
-                            .font(.caption2)
-                            .foregroundStyle(.orange)
-                            .frame(width: 28, height: 28)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.borderless)
-                }
 
                 // Edit per-exercise tags (FR-3)
                 Button {
@@ -364,7 +338,7 @@ struct SessionView: View {
                         SetRowView(
                             exerciseSet: exerciseSet,
                             setNumber: index + 1,
-                            comparisonWeight: bestWeight
+                            comparisonWeight: lastSessionMax
                         )
 
                         // Inline delete button for custom layout
@@ -463,7 +437,7 @@ struct SessionView: View {
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 11)
                             .background(
-                                .orange.opacity(0.155), // warm carb-loaded feel
+                                .orange.opacity(0.15),
                                 in: RoundedRectangle(cornerRadius: 12)
                             )
                         }
@@ -477,8 +451,8 @@ struct SessionView: View {
                                 Image(systemName: "checkmark")
                                     .font(.caption.weight(.bold))
                                 Text("Complete Workout")
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
                             }
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
@@ -538,20 +512,14 @@ struct SessionView: View {
         exercise.sets.append(newSet)
     }
 
-    /// FR-7: set every set's weight & reps to the exercise's historical best.
-    private func applyLastMax(to exercise: Exercise) {
-        guard let best = bestHistoricalSet(for: exercise.name) else { return }
-        for set in exercise.sets {
-            set.weight = best.weight
-            set.repCount = best.reps
-        }
-    }
-
-    /// Snaps all sets in the current exercise to replicate the last session's weights & reps (including matching set count).
+    /// Snaps the current exercise's sets to replicate the last session's weights
+    /// & reps (matching set count too). Sets the user has already marked complete
+    /// are left untouched so logged work is never overwritten.
     private func snapToLastSession(exercise: Exercise, lastSets: [ExerciseSet]) {
         let currentSortedSets = exercise.sets.sorted { $0.sortOrder < $1.sortOrder }
         for i in 0..<lastSets.count {
             if i < currentSortedSets.count {
+                guard !currentSortedSets[i].isCompleted else { continue }
                 currentSortedSets[i].weight = lastSets[i].weight
                 currentSortedSets[i].repCount = lastSets[i].repCount
             } else {
