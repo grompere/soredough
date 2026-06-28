@@ -1,6 +1,6 @@
-_Last updated: June 28, 2026_
-
 # 🥖 Sore Dough
+
+_Last updated: June 28, 2026_
 
 This is a really well baked workout tracker app.
 
