@@ -1,11 +1,13 @@
 import SwiftUI
 import SwiftData
+import Combine
 
 struct SessionView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Bindable var session: Session
     @State private var showTagEditor = false
+    @State private var isKeyboardVisible = false
 
     /// Tracks which exercise the user last interacted with.
     @State private var focusedExerciseID: UUID?
@@ -162,6 +164,16 @@ struct SessionView: View {
         .sheet(item: $tagEditingExercise) { exercise in
             TagEditorView(tags: Bindable(exercise).tags)
                 .presentationDetents([.medium])
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                isKeyboardVisible = true
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                isKeyboardVisible = false
+            }
         }
     }
 
@@ -407,63 +419,67 @@ struct SessionView: View {
     // MARK: - Bottom Buttons
 
     private var bottomButtons: some View {
-        VStack(spacing: 0) {
-            Divider()
+        Group {
+            if !isKeyboardVisible {
+                VStack(spacing: 0) {
+                    Divider()
 
-            VStack(spacing: 12) {
-                Button {
-                    withAnimation(.spring(response: 0.35)) {
-                        addExercise()
-                    }
-                } label: {
-                    HStack(spacing: 5) {
-                        Image(systemName: "plus")
-                            .font(.caption.weight(.bold))
-                        Text("New Exercise")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(.orange)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 11)
-                    .background(
-                        .orange.opacity(0.15),
-                        in: RoundedRectangle(cornerRadius: 12)
-                    )
-                }
+                    VStack(spacing: 12) {
+                        Button {
+                            withAnimation(.spring(response: 0.35)) {
+                                addExercise()
+                            }
+                        } label: {
+                            HStack(spacing: 5) {
+                                Image(systemName: "plus")
+                                    .font(.caption.weight(.bold))
+                                Text("New Exercise")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundStyle(.orange)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 11)
+                            .background(
+                                .orange.opacity(0.155), // warm carb-loaded feel
+                                in: RoundedRectangle(cornerRadius: 12)
+                            )
+                        }
 
-                Button {
-                    withAnimation {
-                        completeWorkout()
+                        Button {
+                            withAnimation {
+                                completeWorkout()
+                            }
+                        } label: {
+                            HStack(spacing: 5) {
+                                Image(systemName: "checkmark")
+                                    .font(.caption.weight(.bold))
+                                Text("Complete Workout")
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                            }
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 11)
+                            .background(
+                                LinearGradient(
+                                    colors: [.green, .green.opacity(0.8)],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ),
+                                in: RoundedRectangle(cornerRadius: 12)
+                            )
+                        }
+                        .disabled(session.isCompleted)
+                        .opacity(session.isCompleted ? 0.5 : 1)
                     }
-                } label: {
-                    HStack(spacing: 5) {
-                        Image(systemName: "checkmark")
-                            .font(.caption.weight(.bold))
-                        Text("Complete Workout")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 11)
-                    .background(
-                        LinearGradient(
-                            colors: [.green, .green.opacity(0.8)],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        ),
-                        in: RoundedRectangle(cornerRadius: 12)
-                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
+                    .padding(.bottom, 6)
                 }
-                .disabled(session.isCompleted)
-                .opacity(session.isCompleted ? 0.5 : 1)
+                .background(.ultraThinMaterial)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 12)
-            .padding(.bottom, 6)
         }
-        .background(.ultraThinMaterial)
     }
 
     // MARK: - Actions
