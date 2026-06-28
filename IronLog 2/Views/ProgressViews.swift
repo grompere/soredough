@@ -65,7 +65,7 @@ struct ProgressListView: View {
     )
     private var completedSessions: [Session]
 
-    @State private var aggregateAcrossTags = false
+    @State private var aggregateAcrossTags = true
 
     // Rename state
     @State private var renamingIdentity: ExerciseIdentity?
