@@ -47,7 +47,7 @@ struct SetRowView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .fontDesign(.rounded)
-                    .frame(width: 52, height: 32)
+                    .frame(width: 68, height: 32)
                     .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 7))
                     .focused($isWeightFocused)
                     .onSubmit { flushWeight() }
@@ -59,7 +59,7 @@ struct SetRowView: View {
                     .foregroundStyle(.tertiary)
                     .fixedSize()
             }
-            .frame(width: 68)
+            .frame(width: 84)
 
             // Beat-it indicator (vs. absolute best — FR-6)
             if let prev = comparisonWeight, prev > 0, exerciseSet.weight > 0 {

@@ -29,7 +29,7 @@ struct TemplateSetRowView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .fontDesign(.rounded)
-                    .frame(width: 52, height: 32)
+                    .frame(width: 68, height: 32)
                     .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 7))
                     .focused($isWeightFocused)
                     .onChange(of: weightText) { _, newValue in
@@ -40,7 +40,7 @@ struct TemplateSetRowView: View {
                     .foregroundStyle(.tertiary)
                     .fixedSize()
             }
-            .frame(width: 68)
+            .frame(width: 84)
 
             Spacer()
 
